@@ -2,4 +2,4 @@
 
 document = {"name": "Holberton school"}
 
-db.school.insertOne(document)
+db.school.insert(document)
