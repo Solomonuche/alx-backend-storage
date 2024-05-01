@@ -16,6 +16,8 @@ def count_calls(func: Callable) -> Callable:
     def wrapper(self, *args, **kwargs):
         """ wrapper function"""
         key = func.__qualname__
+        if not self._redis.exists(key):
+            self._redis.set(key, 0)
         self._redis.incrby(key, 1)
         return func(self, *args, **kwargs)
     return wrapper
