@@ -8,18 +8,18 @@ from uuid import uuid4
 import redis
 
 
-def count_calls(func: Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """
     cache.store decorator
     """
-    @functools.wraps(func)
+    @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         """ wrapper function"""
-        key = func.__qualname__
+        key = method.__qualname__
         if not self._redis.exists(key):
             self._redis.set(key, 0)
-        self._redis.incrby(key, 1)
-        return func(self, *args, **kwargs)
+        self._redis.incr(key, 1)
+        return method(self, *args, **kwargs)
     return wrapper
 
 
