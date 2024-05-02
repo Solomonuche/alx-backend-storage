@@ -36,4 +36,4 @@ def get_page(url: str) -> str:
 
     if url:
         response = requests.get(url)
-        return response
+        return response.text
